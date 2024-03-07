@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "target": "ES2016",
+    "module": "CommonJS",
+    "outDir": "./dist",
+    "rootDir": "./",
+    "removeComments": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "lib": ["dom", "ES2020", "ES2021.WeakRef"]
+  },
+  "include": ["src/**/*.ts", "node_modules/@types", "src/index.js"]
+}
