@@ -23,8 +23,8 @@ interface CurrentWeatherProps {
 export const CurrentWeather = ({ storageService = new StorageService() }: CurrentWeatherProps) => {
   const [weather, setWether] = useState<RxDocument<WeatherDataType, WeatherMethodsType> | null>(null);
   const [forecast, setForecast] = useState<RxDocument<ForecastDataType, ForecastMethodsType> | null>(null);
-  useSubscription(storageService.getCurrentWeatherData(), setWether)
-  useSubscription(storageService.getCurrentForecastData(), setForecast)
+  useSubscription(storageService.getCurrentWeatherDataObservable(), setWether)
+  useSubscription(storageService.getCurrentForecastDataObservable(), setForecast)
   return (
     <CurrentWeatherContainer>
       <Result>

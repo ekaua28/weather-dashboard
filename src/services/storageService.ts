@@ -44,10 +44,13 @@ export default class StorageService implements IStorageService {
   }
 
   getWeatherDataObservable() {
-    return this.weather().find().$
+    return this.weather().find({
+      selector: {},
+      sort: [{ timepoint: 'asc' }],
+    }).$
   }
 
-  getCurrentWeatherData() {
+  getCurrentWeatherDataObservable() {
     return this.weather().findOne({
       selector: {},
       sort: [{ timepoint: 'asc' }],
@@ -65,7 +68,7 @@ export default class StorageService implements IStorageService {
     }).$
   }
 
-  getCurrentForecastData() {
+  getCurrentForecastDataObservable() {
     return this.forecast().findOne({
       selector: {},
       sort: [{ date: 'asc' }],

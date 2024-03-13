@@ -5,6 +5,7 @@ import { ContentContainer, MainContainer } from "./WeatherDashboard.styles";
 import { CurrentWeather } from '../CurrentWeather/CurrentWeather';
 import { WeatherForecast } from '../WeatherForecast/WeatherForecast';
 import { Background } from '../Background/Background';
+import { TemperatureGraph } from '../WeatherChart/WeatherChart';
 
 export const WeatherDashboard = () => {
   return (
@@ -14,6 +15,7 @@ export const WeatherDashboard = () => {
         <ContentContainer>
           <CurrentWeather />
           <WeatherForecast />
+          <TemperatureGraph />
         </ContentContainer>
       </MotionBox>
     </MainContainer>
