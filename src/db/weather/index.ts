@@ -6,10 +6,10 @@ import {
   WeatherCollectionMethodsType,
   weatherMethods,
 } from './methods'
-import { IWeatherData } from '../../types'
+import { WeatherDataType } from '../../types'
 
 export type WeatherCollectionType = RxCollection<
-  IWeatherData,
+  WeatherDataType,
   WeatherMethodsType,
   WeatherCollectionMethodsType
 >

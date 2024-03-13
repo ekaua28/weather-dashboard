@@ -1,13 +1,78 @@
-import { v4 as uuid } from 'uuid'
-import { Database } from '../db'
-import { IWeatherData } from '../types'
+import { DatabaseType } from '../db'
+import { ForecastDataType, WeatherDataType } from '../types'
+import { BehaviorSubject } from 'rxjs'
+import { WeatherMethodsType } from '../db/weather/methods'
+import { RxDocument } from 'rxdb'
 
-export const setWeatherData = (weather: IWeatherData[]) => {
-  const db = new Database().get()
-  db.weather.addWeather(weather.map((w) => ({ ...w, id: uuid() })))
+interface IStorageService {
+  initDataBase(db: DatabaseType): void
+  getWeatherDataObservable(): BehaviorSubject<
+    RxDocument<WeatherDataType, WeatherMethodsType>[]
+  >
+  setWeatherData(weather: WeatherDataType[]): void
 }
 
-export const getWeatherDataObservable = () => {
-  const db = new Database().get()
-  return db.weather.find().$
+export default class StorageService implements IStorageService {
+  private static instance: StorageService
+  private _db: DatabaseType | undefined
+
+  constructor() {
+    if (StorageService.instance) {
+      return StorageService.instance
+    }
+
+    StorageService.instance = this
+  }
+
+  private db() {
+    if (this._db) {
+      return this._db
+    }
+    throw new Error('Database not initialized yet!')
+  }
+
+  private weather() {
+    return this.db().weather
+  }
+
+  private forecast() {
+    return this.db().forecast
+  }
+
+  initDataBase(db: DatabaseType) {
+    this._db = db
+  }
+
+  getWeatherDataObservable() {
+    return this.weather().find().$
+  }
+
+  getCurrentWeatherData() {
+    return this.weather().findOne({
+      selector: {},
+      sort: [{ timepoint: 'asc' }],
+    }).$
+  }
+
+  setWeatherData(weather: WeatherDataType[]) {
+    this.weather().addWeather(weather)
+  }
+
+  getForecastDataObservable() {
+    return this.forecast().find({
+      selector: {},
+      sort: [{ date: 'asc' }],
+    }).$
+  }
+
+  getCurrentForecastData() {
+    return this.forecast().findOne({
+      selector: {},
+      sort: [{ date: 'asc' }],
+    }).$
+  }
+
+  setForecastData(forecast: ForecastDataType[]) {
+    this.forecast().addForecast(forecast)
+  }
 }

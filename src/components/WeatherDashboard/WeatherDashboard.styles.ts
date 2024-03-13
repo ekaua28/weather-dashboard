@@ -1,24 +1,32 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
-export const WeatherDashboardContainer = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-`;
+export const MainContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+`
 
-export const WeatherSection = styled.section`
-  margin-bottom: 30px;
-`;
+export const ContentContainer = styled.div`
+  grid-area: content;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    'current forecast'
+    'chart forecast';
+  grid-gap: 30px;
 
-export const Heading2 = styled.h2`
-  margin-bottom: 10px;
-`;
+  border-radius: 12px;
+  padding: 30px;
+  width: 100%;
 
-export const UnorderedList = styled.ul`
-  list-style: none;
-  padding: 0;
-`;
-
-export const ListItem = styled.li`
-  margin-bottom: 5px;
-`;
+  @media (max-width: 1250px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas:
+      'current'
+      'forecast'
+      'chart';
+    padding: 30px 15px;
+  }
+`

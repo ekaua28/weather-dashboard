@@ -1,7 +1,10 @@
 import { RxJsonSchema } from 'rxdb'
-import { IWeatherData } from '../../types'
+import { WeatherDataType } from '../../types'
 
-export const weatherSchema: RxJsonSchema<IWeatherData> = {
+/*
+    wind10m: WindDataType;
+    */
+export const weatherSchema: RxJsonSchema<WeatherDataType> = {
   title: 'weather schema',
   version: 0,
   description: 'Schema for weather data',
@@ -12,22 +15,48 @@ export const weatherSchema: RxJsonSchema<IWeatherData> = {
       type: 'string',
       maxLength: 100,
     },
-    date: {
+    cloudcover: {
       type: 'number',
+    },
+    lifted_index: {
+      type: 'number',
+    },
+    prec_amount: {
+      type: 'number',
+    },
+    prec_type: {
+      type: 'string',
+    },
+    rh2m: {
+      type: 'string',
+    },
+    temp2m: {
+      type: 'string',
+    },
+    timepoint: {
+      type: 'string',
     },
     weather: {
       type: 'string',
     },
-    temp2m: {
+    wind10m: {
       type: 'object',
       properties: {
         max: { type: 'number' },
         min: { type: 'number' },
       },
     },
-    wind10m_max: {
-      type: 'number',
-    },
   },
-  required: ['date', 'weather', 'temp2m', 'wind10m_max'],
+  required: [
+    'id',
+    'cloudcover',
+    'lifted_index',
+    'prec_amount',
+    'prec_type',
+    'rh2m',
+    'temp2m',
+    'timepoint',
+    'weather',
+    'wind10m',
+  ],
 }

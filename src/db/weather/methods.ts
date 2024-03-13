@@ -1,22 +1,28 @@
 import { RxDocument, RxStorageWriteError } from 'rxdb'
-import { IWeatherData } from '../../types'
+import { WeatherDataType } from '../../types'
 import { WeatherCollectionType } from './index'
 
-export type WeatherMethodsType = {}
+export type WeatherMethodsType = {
+  getWind(): string
+}
 
-export const weatherMethods: WeatherMethodsType = {}
+export const weatherMethods: WeatherMethodsType = {
+  getWind: function (this: WeatherDataType) {
+    return `${this.wind10m.direction} ${this.wind10m.speed} m/s`
+  },
+}
 
 export type WeatherCollectionMethodsType = {
-  addWeather: (weather: IWeatherData[]) => Promise<{
-    success: RxDocument<IWeatherData, WeatherMethodsType>[]
-    error: RxStorageWriteError<IWeatherData>[]
+  addWeather: (weather: WeatherDataType[]) => Promise<{
+    success: RxDocument<WeatherDataType, WeatherMethodsType>[]
+    error: RxStorageWriteError<WeatherDataType>[]
   }>
 }
 
 export const weatherCollectionMethods: WeatherCollectionMethodsType = {
   addWeather: async function (
     this: WeatherCollectionType,
-    weather: IWeatherData[],
+    weather: WeatherDataType[],
   ) {
     return this.bulkInsert(weather)
   },
